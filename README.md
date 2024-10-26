@@ -1,151 +1,115 @@
-# 🖥️ Custom Shell README 📜
+# 🖥️ Interactive C Shell Documentation 📜
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Basic System Calls](#basic-system-calls)
-  - [Display Requirement](#display-requirement)
-  - [Input Requirements](#input-requirements)
-  - [warp Command](#warp-command)
-  - [peek Command](#peek-command)
-  - [pastevents Command](#pastevents-command)
+- [Overview](#overview)
+- [Core Functionality](#core-functionality)
   - [System Commands](#system-commands)
-  - [proclore Command](#proclore-command)
-  - [seek Command](#seek-command)
-- [Processes, Files, and Misc.](#processes-files-and-misc)
+  - [Process Management](#process-management)
+  - [File Operations](#file-operations)
+  - [Custom Commands](#custom-commands)
+- [Advanced Features](#advanced-features)
   - [I/O Redirection](#io-redirection)
-  - [Pipes](#pipes)
-  - [Redirection along with Pipes](#redirection-along-with-pipes)
-  - [activities Command](#activities-command)
-  - [Signals](#signals)
-  - [fg and bg Commands](#fg-and-bg-commands)
-  - [neonate Command](#neonate-command)
-- [Networking](#networking)
-  - [iMan Command](#iman-command)
+  - [Piping and Redirection](#piping-and-redirection)
+  - [Networking](#networking)
+- [Error Handling & Signals](#error-handling--signals)
+- [Getting Started](#getting-started)
 
-## Introduction
+## Overview
 
-This document describes the implementation and usage of a custom shell with various features such as system calls, file handling, process management, and networking.
+Welcome to the **Interactive C Shell**! This shell offers a customized command-line experience with advanced functionality and enhanced command control, allowing you to manage files, processes, and networks effortlessly. Its features include custom-built commands, robust error handling, process signals, and network utilities, all within a responsive and user-friendly interface.
 
-## Basic System Calls 📞
+---
 
-### Display Requirement
-
-The shell prompt displays in the form `<Username@SystemName:~>`. The username and system name are dynamically retrieved, and the current directory is shown relative to the shell's home directory (~).
-
-### Input Requirements
-
-- The shell supports a list of commands separated by `;` or `&`.
-- Commands can be executed in the background with `&`.
-- Multiple commands can be given using `;`.
-- Commands with errors will display an error message.
-
-### warp Command 🚀
-
-The warp command changes the current working directory.
-
-- Supports `.`, `..`, `~` (home directory), and `-` (previous directory).
-- Executes sequentially if multiple arguments are provided.
-- Prints the full path after changing the directory.
-
-### peek Command 👀
-
-The peek command lists files and directories.
-
-- Default behavior excludes hidden files.
-- Flags:
-  - `-l`: Displays extra information.
-  - `-a`: Includes hidden files.
-- Supports symbols like `.`, `..`, `~`, and `-`.
-
-### pastevents Command 🕰️
-
-The pastevents command is similar to the history command in Bash.
-
-- Stores the 15 most recent commands.
-- Commands identical to the previous one are not stored.
-- Persistent over different shell runs.
-- Subcommands:
-  - `pastevents`: Displays the history.
-  - `pastevents purge`: Clears the history.
-  - `pastevents execute <index>`: Executes a command from the history.
+## Core Functionality
 
 ### System Commands 💻
 
-- Executes other system commands present in Bash (e.g., emacs, gedit).
-- Supports both foreground and background processes.
-- Prints the time taken for processes running more than 2 seconds.
+The shell supports standard system commands as well as custom functionality:
 
-### proclore Command 📊
+- **Foreground and Background Execution:** Commands can be run in the background using `&` or sequentially using `;`.
+- **Process Time Display:** For commands that exceed 2 seconds of runtime, the shell outputs the execution time.
+- **Error Feedback:** Clear messages for invalid commands or improper syntax ensure smooth usage.
 
-The proclore command displays process information.
+### Process Management 📊
 
-- Displays:
-  - PID
-  - Process status (R/R+/S/S+/Z)
-  - Process group
-  - Virtual memory
-  - Executable path
+- **`proclore` Command**: View real-time process information, including:
+  - Process ID (PID), status, process group, virtual memory, and executable path.
 
-### seek Command 🔍
+- **`activities` Command**: Lists all active processes initiated by the shell, showing each:
+  - Command name, PID, and state (Running or Stopped).
 
-The seek command searches for files or directories.
+- **`fg` and `bg` Commands**:
+  - `fg <pid>` brings a background process to the foreground.
+  - `bg <pid>` resumes a stopped process in the background.
 
-- Flags:
-  - `-d`: Only look for directories.
-  - `-f`: Only look for files.
-  - `-e`: Prints content or changes the directory if only one match is found.
-- Supports symbols like `.`, `..`, `~`, and `-`.
-- Prints "No match found!" if no match is found.
-- Prints "Invalid flags!" if both `-d` and `-f` are used simultaneously.
+### File Operations 📁
 
-## Processes, Files, and Misc. 📁
+- **`warp` Command**: Efficient directory navigation with support for `.`, `..`, `~`, and `-`.
+- **`peek` Command**: File listing utility with options:
+  - `-l` for detailed listing, `-a` to include hidden files.
+
+- **`seek` Command**: File/directory search functionality with flexible options:
+  - `-d` restricts search to directories, `-f` restricts to files, and `-e` executes or displays the first match found.
+
+### Custom Commands 🔧
+
+- **`pastevents` Command**: An enhanced history tool:
+  - Tracks the 15 most recent commands and persists across sessions.
+  - `pastevents execute <index>` to run a previous command.
+  - `pastevents purge` clears the command history.
+
+- **`neonate` Command**: Monitors and prints the PID of the most recent process every `[time_arg]` seconds until terminated.
+
+---
+
+## Advanced Features
 
 ### I/O Redirection 🔀
 
-- Supports `>`, `>>`, and `<`.
-- Creates or appends to files as necessary.
-- Displays "No such input file found!" if the input file does not exist.
+Supports input and output redirection with:
+- `>` to overwrite, `>>` to append, and `<` to read from files.
+- Displays "No such input file found!" if an input file is missing.
 
-### Pipes ⛓️
+### Piping and Redirection ⛓️
 
-- Supports piping between commands.
-- Executes commands sequentially from left to right.
-- Displays "Invalid use of pipe" if improperly used.
+Combines standard piping with redirection:
+- Commands are piped in left-to-right order.
+- For improper use, the shell returns "Invalid use of pipe."
 
-### Redirection along with Pipes 🔄
+### Networking 🌐
 
-- Supports I/O redirection with pipes.
-- Ensures proper functionality when used together.
+- **`iMan` Command**: Fetches online manual pages for any specified command:
+  - `iMan <command_name>` displays documentation, combining functionality with network-based help retrieval.
 
-### activities Command 📋
+---
 
-The activities command lists all running processes spawned by the shell.
+## Error Handling & Signals 🚦
 
-- Displays:
-  - Command name
-  - PID
-  - State (Running or Stopped)
+- **Signal Handling**:
+  - `ping <pid> <signal_number>` sends a specified signal to a process.
+  - Handles keyboard interrupts:
+    - **Ctrl-C** sends SIGINT to the foreground process.
+    - **Ctrl-D** exits the shell.
+    - **Ctrl-Z** stops the foreground process.
 
-### Signals 🚦
+- **Error Messaging**: The shell provides detailed feedback for command issues, flagging any unrecognized syntax or file access errors.
 
-- `ping <pid> <signal_number>`: Sends a signal to a process.
-- Handles special keyboard inputs:
-  - Ctrl-C: Sends SIGINT to foreground process.
-  - Ctrl-D: Logs out of the shell.
-  - Ctrl-Z: Stops the foreground process.
+---
 
-### fg and bg Commands 🌟
+## Getting Started 🚀
 
-- `fg <pid>`: Brings a background process to the foreground.
-- `bg <pid>`: Changes the state of a stopped background process to running.
+To compile and start the Interactive C Shell:
 
-### neonate Command 👶
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/Interactive-C-Shell.git
 
-- `neonate -n [time_arg]`: Prints the PID of the most recently created process every `[time_arg]` seconds until `x` is pressed.
+2. Navigate to the project directory:
+  ```cd Interactive-C-Shell```
 
-## Networking 🌐
+3. Compile the source code:
+  ```make```
 
-### iMan Command ℹ️
-
-- `iMan <command_name>`: Fetches and displays the man page for a given command from the internet.
+4. Start the shell:
+```./shell```
