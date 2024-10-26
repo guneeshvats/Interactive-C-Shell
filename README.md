@@ -4,16 +4,17 @@
 
 - [Overview](#overview)
 - [Core Functionality](#core-functionality)
-  - [System Commands](#system-commands)
-  - [Process Management](#process-management)
-  - [File Operations](#file-operations)
-  - [Custom Commands](#custom-commands)
+  - [System Commands](#system-commands-💻)
+  - [Process Management](#process-management-📊)
+  - [File Operations](#file-operations-📁)
+  - [Custom Commands](#custom-commands-🔧)
 - [Advanced Features](#advanced-features)
-  - [I/O Redirection](#io-redirection)
-  - [Piping and Redirection](#piping-and-redirection)
-  - [Networking](#networking)
-- [Error Handling & Signals](#error-handling--signals)
-- [Getting Started](#getting-started)
+  - [I/O Redirection](#io-redirection-🔀)
+  - [Piping and Redirection](#piping-and-redirection-⛓️)
+  - [Networking](#networking-🌐)
+- [Error Handling & Signals](#error-handling--signals-🚦)
+- [Getting Started](#getting-started-🚀)
+
 
 ## Overview
 
